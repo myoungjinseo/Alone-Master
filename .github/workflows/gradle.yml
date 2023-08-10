@@ -65,10 +65,6 @@ jobs:
     # AWS EC2 Server Connect & Docker 명령어 실행 (8)
     - name: AWS EC2 Connection
       uses: appleboy/ssh-action@v0.1.6
-      env:
-        spring.datasource.url: ${{ secrets.DB_JDBC_URL }}
-        spring.datasource.username: ${{ secrets.DB_USER }}
-        spring.datasource.password: ${{ secrets.DB_PASSWORD }}
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }} 
@@ -78,8 +74,8 @@ jobs:
         script: |
           sudo docker stop spring-boot
           sudo docker rm spring-boot
-          sudo docker run -it -d -p 8080:8080 --name spring-boot ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot
-    
+          sudo docker run ${{ secrets.ENVIRONMENT }} -it -d -p 8080:8080 --name spring-boot ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot
+          
     # REMOVE Github IP FROM security group (9)
     - name: Remove IP FROM security group
       run: |
