@@ -10,8 +10,6 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -72,7 +70,7 @@ jobs:
         port: ${{ secrets.EC2_SSH_PORT }}
         script: |
           sudo docker stop spring-boot
-          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot
+          sudo docker pull spring-boot
           sudo docker rm spring-boot
           sudo docker run ${{ secrets.ENVIRONMENT }} -it -d -p 8080:8080 --name spring-boot ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot
           
