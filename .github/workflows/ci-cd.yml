@@ -31,7 +31,7 @@ jobs:
     - name: docker image build
       run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot .
     
-    # DockerHub Login (3)
+    # DockerHub Login (3) 
     - name: docker login 
       uses: docker/login-action@v2
       with: 
